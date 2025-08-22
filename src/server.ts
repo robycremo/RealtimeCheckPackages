@@ -1,7 +1,7 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
-import { NotificationService } from "../notification.service";
+import { NotificationService } from "./notification.service";
 
 const app = express();
 const server = http.createServer(app);

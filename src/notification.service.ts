@@ -1,6 +1,6 @@
 import sql from "mssql";
 import { Server } from "socket.io";
-import logger from "../config/logger";
+import logger from "./config/logger";
 
 export class NotificationService {
   private io: Server;
