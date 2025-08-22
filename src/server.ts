@@ -1,27 +1,25 @@
-
-import express from 'express';
-import http from 'http';
-import dotenv from 'dotenv';
-import { setupSocket, notifyClients } from './socket';
-import { setupSqlNotifier } from './sql-notifier';
-
-dotenv.config();
+import express from "express";
+import http from "http";
+import { Server } from "socket.io";
+import { NotificationService } from "../notification.service";
 
 const app = express();
 const server = http.createServer(app);
-
-setupSocket(server);
-
-// Avvio notifiche SQL
-setupSqlNotifier(notifyClients)
-  .then(() => console.log('✅ SqlDependency attivato'))
-  .catch((err) => console.error('❌ Errore setup SqlNotifier:', err));
-
-app.get('/', (req, res) => {
-  res.send('✅ Backend attivo con SqlDependency');
+const io = new Server(server, {
+  cors: { origin: "*" }
 });
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`🚀 Server ascolta sulla porta ${PORT}`);
+const notificationService = new NotificationService(io);
+notificationService.startPolling();
+
+io.on("connection", (socket) => {
+  console.log("🔌 Client connected:", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("❌ Client disconnected:", socket.id);
+  });
+});
+
+server.listen(3000, () => {
+  console.log("🚀 Server running on port 3000");
 });
