@@ -9,7 +9,6 @@
     "dotenv": "^10.0.0",
     "express": "^4.19.2",
     "mssql": "^10.0.0",
-    "mssql-notifications": "^1.1.0",
     "socket.io": "^4.5.0"
   },
   "devDependencies": {
