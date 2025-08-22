@@ -2,8 +2,9 @@
   "name": "realtime-packages-reconciliation-backend",
   "version": "1.0.0",
   "scripts": {
-    "start": "ts-node src/server.ts",
-    "dev": "ts-node-dev --respawn src/server.ts"
+  "build": "tsc",
+  "start": "node dist/server.js",
+  "dev": "ts-node-dev --respawn src/server.ts"
   },
   "dependencies": {
     "dotenv": "^17.2.1",
